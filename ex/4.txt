@@ -1,0 +1,29 @@
+1-3) ALTER TABLE movies ADD movie_id SERIAL PRIMARY KEY;
+  
+ALTER TABLE actors ADD movie_id INTEGER REFERENCES filmography.public.movies (movie_id);
+  
+ALTER TABLE producers ADD best_movie_id INTEGER REFERENCES filmography.public.movies (movie_id);
+
+ALTER TABLE producers ADD movie_id INTEGER REFERENCES filmography.public.movies (movie_id);
+  
+4) ALTER TABLE movies ALTER movie_country SET DEFAULT 'UK';
+
+5) ALTER TABLE actors DROP CONSTRAINT actor_number_of_movies;
+
+6) ALTER TABLE movies ADD CONSTRAINT check_min_price CHECK (movie_budget > 1000);
+
+7) CREATE TABLE genres (id   SERIAL PRIMARY KEY, name VARCHAR(50));
+
+ALTER TABLE movies DROP movie_genres;
+ALTER TABLE movies ADD genre_id INTEGER REFERENCES genres (id);
+
+8) CREATE TYPE COUNTRY AS ENUM ('USA', 'UK', 'Russia', 'France', 'Germany');
+
+ALTER TABLE persons DROP person_motherland;
+ALTER TABLE persons ADD person_motherland COUNTRY;
+
+9) ALTER TABLE persons ADD CONSTRAINT check_right_date CHECK (person_birthday <= CURRENT_DATE);
+
+10) CREATE INDEX ON actors (person_name, person_surname);
+
+11) UPDATE movies SET movie_name = concat(movie_name, '(', movie_year, ')');
